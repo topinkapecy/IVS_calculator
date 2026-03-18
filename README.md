@@ -2,16 +2,16 @@ Prostredi
 ---------
 
 Ubuntu 64bit
-Windows 64bit
 
 Autori
 ------
 
 Nazev tymu
-- xlogin01 jmeno prijmeni 
-- xlogin02 jmeno prijmeni 
-- xlogin03 jmeno prijmeni 
-- xlogin04 jmeno prijmeni 
+- xnaselp00 Petr Nášel 
+- xsladed00 David SLádek
+- xsirilm00 Michal Širilla 
+- xcehlas00 Samuel Cehlárik
+- 
 
 Licence
 -------
