@@ -1,5 +1,5 @@
 import tkinter
-import math
+import math_ivs
 import re
 root = tkinter.Tk()
 root.title("Kalkulačka")
@@ -20,7 +20,7 @@ def calculate():
         expression = display.get()
         expression = expression.replace("×", "*").replace("^", "**")
         expression = expression.replace("÷", "/")
-        expression = re.sub(r'(\d+)!', r'math.factorial(int(\1))', expression) # makes factorial to not evaluate immedialtelly but wait for =
+        expression = re.sub(r'(\d+)!', r'math_ivs.factorial(int(\1))', expression) # makes factorial to not evaluate immedialtelly but wait for =
         result = eval(expression)
         result_str = str(result)
 
@@ -33,7 +33,7 @@ def calculate():
 
 def square_root():
     try:
-        result = round(math.sqrt(float(display.get())), 6) # rounds to 6 decimal places
+        result = round(math_ivs.sqrt(float(display.get())), 6) # rounds to 6 decimal places
         display.set(str(result))
     except:
         display.set("Error")
