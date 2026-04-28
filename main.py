@@ -11,7 +11,23 @@ root.iconphoto(True, logo)
 display = tkinter.StringVar()
 
 def press(value):
-    display.set(display.get() + str(value))
+    current = display.get()
+
+    operators = "+-×÷^."
+
+    # If input is an operator
+    if str(value) in operators:
+        # Prevent operator at start (except minus for negative numbers)
+        if current == "":
+            if value == "-":
+                display.set(value)
+            return
+
+        # Prevent double operators (like ++, --, ×÷ etc.)
+        if current[-1] in operators:
+            return
+
+    display.set(current + str(value))
 
 def clear():
     display.set("")
@@ -21,7 +37,8 @@ def calculate():
         expression = display.get()
         expression = expression.replace("×", "*").replace("^", "**")
         expression = expression.replace("÷", "/")
-        expression = re.sub(r'(\d+)!', r'math_ivs.factorial(int(\1))', expression) # makes factorial to not evaluate immedialtelly but wait for =
+        expression = re.sub(r'(-?\d+)!', r'math_ivs.factorial(int(\1))', expression)# makes factorial to not evaluate immedialtelly but wait for =
+        expression = re.sub(r'√(\d+(\.\d+)?)', r'math_ivs.sqrt(\1)', expression)#behaves same as factorial
         result = eval(expression)
         result_str = str(result)
 
@@ -58,7 +75,7 @@ tkinter.Entry(canvas, textvariable=display, font=("Arial", 30), justify="right",
 tkinter.Button(canvas, text="C",bg= "gainsboro",font= "Arial 20", command=clear).place(x=10, y=120, width=380, height=70)
 
 # Row 5
-tkinter.Button(canvas, text="√",bg = "darkorange",font= "Arial 20", command=square_root).place(x=10, y=200, width=87.5, height=50)
+tkinter.Button(canvas, text="√",bg = "darkorange",font= "Arial 20",command=lambda: press("√")).place(x=10, y=200, width=87.5, height=50)
 tkinter.Button(canvas, text="^",bg = "darkorange",font= "Arial 20", command=lambda: press("^")).place(x=107.5, y=200, width=87.5, height=50)
 tkinter.Button(canvas, text="!",bg = "darkorange",font= "Arial 20", command=factorial).place(x=205, y=200, width=87.5, height=50)
 tkinter.Button(canvas, text="÷",bg = "darkorange",font= "Arial 20", command=lambda: press("÷")).place(x=302.5, y=200, width=87.5, height=50)
