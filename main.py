@@ -1,9 +1,11 @@
 import tkinter
 import math
 import re
-
+root = tkinter.Tk()
+root.title("Kalkulačka")
 canvas = tkinter.Canvas(height=500, width=400, bg= "darkgrey")
 canvas.pack()
+
 
 display = tkinter.StringVar()
 
@@ -89,4 +91,4 @@ canvas.bind_all("<Key>", lambda e: press(e.char) if e.char in "0123456789.+-*/" 
 canvas.bind_all("<Return>", lambda e: calculate())
 canvas.bind_all("<BackSpace>", lambda e: display.set(display.get()[:-1]))
 canvas.bind_all("<Escape>", lambda e: clear())
-canvas.mainloop()
+root.mainloop()
