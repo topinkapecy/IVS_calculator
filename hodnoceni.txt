@@ -1,4 +1,4 @@
-xlogin01 100 (základ GUI a základní mat. operace)
-xlogin02 100 (pokročilé mat. operace)
-xlogin03 90 (profiling, instalátor)
-xlogin04 110 (testy, dokumentace)
+xcehlas00 100 (GUI, matematicka knihovna)
+xnaselp00 100 (dokumentace, instalator)
+xsladed00 100 (profiling, makefile) 
+xsirilm00 100 (debugging, testy, mockup)
