@@ -2,7 +2,7 @@ import tkinter
 import math_ivs
 import re
 root = tkinter.Tk()
-root.title("Kalkulačka")
+root.title("Calc")
 canvas = tkinter.Canvas(height=500, width=400, bg= "darkgrey")
 canvas.pack()
 logo = tkinter.PhotoImage(file="logo.png")
