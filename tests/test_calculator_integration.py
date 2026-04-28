@@ -149,13 +149,36 @@ def test_invalid_expressions_error(app, expression):
         ("2.25", "1.5"),
     ],
 )
+
+@pytest.mark.parametrize("expression", ["-5!"])
+def test_factorial_invalid_values_error(app, expression):
+    app.display.set(expression)
+
+    app.calculate()
+
+    assert app.display.get() == "Error"
+
+@pytest.mark.parametrize(
+    "expression",
+    [
+        "2++2",
+        "2--2",
+        "2+-2",
+    ],
+)
+def test_consecutive_operators_return_error(app, expression):
+    app.display.set(expression)
+
+    app.calculate()
+
+    assert app.display.get() == "Error"
+    
 def test_square_root_valid_values(app, value, expected):
     app.display.set(value)
 
     app.square_root()
 
     assert app.display.get() == expected
-
 
 @pytest.mark.parametrize("value", ["-9", ""])
 def test_square_root_invalid_values_error(app, value):
