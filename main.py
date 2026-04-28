@@ -5,7 +5,8 @@ root = tkinter.Tk()
 root.title("Kalkulačka")
 canvas = tkinter.Canvas(height=500, width=400, bg= "darkgrey")
 canvas.pack()
-
+logo = tkinter.PhotoImage(file="logo.png")
+root.iconphoto(True, logo)
 
 display = tkinter.StringVar()
 
