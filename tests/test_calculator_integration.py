@@ -101,6 +101,33 @@ def test_operation_button_writes_symbol(app, symbol, expected):
 
     assert app.display.get() == expected
 
+@pytest.mark.parametrize(
+    "expression, expected",
+    [
+        ("09+1", "10"),
+        ("007+3", "10"),
+    ],
+)
+def test_numbers_with_leading_zero_calculate_correctly(app, expression, expected):
+    app.display.set(expression)
+
+    app.calculate()
+
+    assert app.display.get() == expected
+
+@pytest.mark.parametrize(
+    "expression, expected",
+    [
+        ("3-5!", "-117"),
+        ("10-3!", "4"),
+    ],
+)
+def test_subtracting_factorial_calculates_correctly(app, expression, expected):
+    app.display.set(expression)
+
+    app.calculate()
+
+    assert app.display.get() == expected
 
 @pytest.mark.parametrize(
     "expression, expected",
