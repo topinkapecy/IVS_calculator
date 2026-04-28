@@ -37,8 +37,9 @@ def calculate():
         expression = display.get()
         expression = expression.replace("×", "*").replace("^", "**")
         expression = expression.replace("÷", "/")
-        expression = re.sub(r'(-?\d+)!', r'math_ivs.factorial(int(\1))', expression)# makes factorial to not evaluate immedialtelly but wait for =
+        expression = re.sub(r'(\d+)!', r'math_ivs.factorial(\1)', expression)# makes factorial to not evaluate immedialtelly but wait for =
         expression = re.sub(r'√(\d+(\.\d+)?)', r'math_ivs.sqrt(\1)', expression)#behaves same as factorial
+        expression = re.sub(r'\b0+(\d+)', r'\1', expression)# supports numbers such as 09+01 = 10
         result = eval(expression)
         result_str = str(result)
 
