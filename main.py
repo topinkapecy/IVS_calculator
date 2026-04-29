@@ -68,7 +68,7 @@ def open_image_window():
     new_window.geometry("587x448")
     img = tkinter.PhotoImage(file="hintcalc.png").subsample(2, 2)
     label = tkinter.Label(new_window, image=img)
-    label.image = img  # musí ostať referencia inak sa obrázok stratí
+    label.image = img 
     label.pack()
 
 
