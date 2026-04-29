@@ -4,7 +4,7 @@ Kalkulačka
 
 Tento projekt byl vytvořen v rámci předmětu Praktické aspekty vývoje softwaru  
 na Fakultě informačních technologií Vysokého učení technického v Brně.  
-<img src="logo.png" width="300" alt="Logo kalkulačky">  
+<img src="src/logo.png" width="300" alt="Logo kalkulačky">  
 
 Prostředí
 ---------
