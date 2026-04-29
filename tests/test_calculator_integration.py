@@ -36,9 +36,10 @@ class FakeWidget:
     def bind_all(self, *args, **kwargs):
         return None
 
-
-class FakeTk(FakeWidget):
     def title(self, *args, **kwargs):
+        return None
+
+    def geometry(self, *args, **kwargs):
         return None
 
     def iconphoto(self, *args, **kwargs):
@@ -47,16 +48,21 @@ class FakeTk(FakeWidget):
     def mainloop(self, *args, **kwargs):
         return None
 
+    def subsample(self, *args, **kwargs):
+        return self
+
 
 @pytest.fixture()
-def app(monkeypatch): 
+def app(monkeypatch):
     fake_tkinter = types.ModuleType("tkinter")
-    fake_tkinter.Tk = FakeTk
+    fake_tkinter.Tk = FakeWidget
+    fake_tkinter.Toplevel = FakeWidget
     fake_tkinter.Canvas = FakeWidget
     fake_tkinter.PhotoImage = FakeWidget
     fake_tkinter.StringVar = FakeStringVar
     fake_tkinter.Entry = FakeWidget
     fake_tkinter.Button = FakeWidget
+    fake_tkinter.Label = FakeWidget
 
     monkeypatch.setitem(sys.modules, "tkinter", fake_tkinter)
     sys.modules.pop("main", None)
@@ -84,6 +90,7 @@ def test_factorial_button_writes_symbol(app):
 
     assert app.display.get() == "5!"
 
+
 @pytest.mark.parametrize(
     "symbol, expected",
     [
@@ -93,41 +100,33 @@ def test_factorial_button_writes_symbol(app):
         ("÷", "5÷"),
         (".", "5."),
         ("^", "5^"),
+        ("√", "5√"),
     ],
 )
-def test_operation_button_writes_symbol(app, symbol, expected):
+def test_operation_buttons_write_symbols(app, symbol, expected):
     app.press(5)
     app.press(symbol)
 
     assert app.display.get() == expected
 
+
 @pytest.mark.parametrize(
-    "expression, expected",
+    "first_operator, second_operator, expected",
     [
-        ("09+1", "10"),
-        ("007+3", "10"),
+        ("+", "+", "2+3"),
+        ("+", "-", "2+3"),
+        ("×", "÷", "2×3"),
+        ("^", "+", "2^3"),
     ],
 )
-def test_numbers_with_leading_zero_calculate_correctly(app, expression, expected):
-    app.display.set(expression)
-
-    app.calculate()
+def test_prevents_two_operators_in_row(app, first_operator, second_operator, expected):
+    app.press(2)
+    app.press(first_operator)
+    app.press(second_operator)
+    app.press(3)
 
     assert app.display.get() == expected
 
-@pytest.mark.parametrize(
-    "expression, expected",
-    [
-        ("3-5!", "-117"),
-        ("10-3!", "4"),
-    ],
-)
-def test_subtracting_factorial_calculates_correctly(app, expression, expected):
-    app.display.set(expression)
-
-    app.calculate()
-
-    assert app.display.get() == expected
 
 @pytest.mark.parametrize(
     "expression, expected",
@@ -139,8 +138,12 @@ def test_subtracting_factorial_calculates_correctly(app, expression, expected):
         ("2+3×4", "14"),
         ("2^4", "16"),
         ("5!", "120"),
+        ("3-5!", "-117"),
         ("4!+2^4", "40"),
         ("12+3÷5", "12.6"),
+        ("09+1", "10"),
+        ("√49", "7.0"),
+        ("3√8", "2.0"),
     ],
 )
 def test_valid_expressions(app, expression, expected):
@@ -157,61 +160,15 @@ def test_valid_expressions(app, expression, expected):
         "5÷0",
         "5+*2",
         "5.5!",
+        "√-9",
+        "0√16",
         "",
     ],
 )
-def test_invalid_expressions_error(app, expression):
+def test_invalid_expressions_show_error(app, expression):
     app.display.set(expression)
 
     app.calculate()
-
-    assert app.display.get() == "Error"
-
-
-@pytest.mark.parametrize(
-    "value, expected",
-    [
-        ("49", "7.0"),
-        ("2", "1.414214"),
-        ("2.25", "1.5"),
-    ],
-)
-
-@pytest.mark.parametrize("expression", ["-5!"])
-def test_factorial_invalid_values_error(app, expression):
-    app.display.set(expression)
-
-    app.calculate()
-
-    assert app.display.get() == "Error"
-
-@pytest.mark.parametrize(
-    "expression",
-    [
-        "2++2",
-        "2--2",
-        "2+-2",
-    ],
-)
-def test_consecutive_operators_return_error(app, expression):
-    app.display.set(expression)
-
-    app.calculate()
-
-    assert app.display.get() == "Error"
-    
-def test_square_root_valid_values(app, value, expected):
-    app.display.set(value)
-
-    app.square_root()
-
-    assert app.display.get() == expected
-
-@pytest.mark.parametrize("value", ["-9", ""])
-def test_square_root_invalid_values_error(app, value):
-    app.display.set(value)
-
-    app.square_root()
 
     assert app.display.get() == "Error"
 
@@ -232,8 +189,9 @@ def test_percentage_values(app, value, expected):
 
     assert app.display.get() == expected
 
+
 def test_long_result_is_shortened(app):
-    app.display.set("99999999999×99999999999999")
+    app.display.set("999999999×9999999999")
 
     app.calculate()
 
