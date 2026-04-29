@@ -1,35 +1,23 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-#python cache
+# Build artifacts
+build/
+dist/
+debian/
+*.spec
 __pycache__/
 *.pyc
-*.pyo
-*.pyd
+*.egg-info/
+
+# Package build artifacts
+*.buildinfo
+*.changes
+*.tar.gz
+
+# Generated docs
+doc/
+
+# IDE
+.idea/
+.vscode/
+
+# Zip
+*.zip
