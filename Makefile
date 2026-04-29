@@ -1,9 +1,9 @@
 PYTHON=python3
 APP=main.py
-STDDEV=stddev.py
+STDDEV=stddev
 PACKAGE=projekt.zip
 
-.PHONY: all run clean pack test doc stddev help
+.PHONY: all run clean pack test doc stddev help profile
 
 all: run
 
@@ -11,7 +11,10 @@ run:
 	$(PYTHON) $(APP)
 
 stddev:
-	$(PYTHON) $(STDDEV) 1 2 3 4 5
+	./$(STDDEV) 1 2 3 4 5
+
+profile:
+	$(PYTHON) -m cProfile -s tottime $(STDDEV) 1 2 3 4 5
 
 test:
 	$(PYTHON) -m unittest discover -v
@@ -25,12 +28,7 @@ clean:
 	rm -f $(PACKAGE)
 
 pack:
-	zip -r $(PACKAGE) . -x "*.git*" "__pycache__/*"
+	zip -r $(PACKAGE) . -x "*.git*" "__pycache__/*" ".idea/*"
 
 help:
-	@echo "Pouzitie:"
-	@echo " make run     - spusti kalkulacku"
-	@echo " make stddev  - vypocita smerodajnu odchylku"
-	@echo " make test    - spusti testy"
-	@echo " make clean   - vymaze docasne subory"
-	@echo " make pack    - vytvori zip"
+	@echo "make run / stddev / profile / test / clean / pack"
