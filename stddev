@@ -42,7 +42,7 @@ def compute_stddev():
     if count < 2:
         return 0.0
 
-    variance = (sum_x2 - (sum_x ** 2) / count) / (count - 1)
+    variance = max(0.0, (sum_x2 - (sum_x * sum_x) / count) / (count - 1))
 
     if variance < 0:
         variance = 0.0
