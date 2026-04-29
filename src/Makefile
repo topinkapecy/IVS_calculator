@@ -21,12 +21,13 @@ test:
 	$(PYTHON) -m unittest discover -v
 
 doc:
-	@echo "Dokumentacia nie je implementovana"
+	doxygen Doxyfile
 
 clean:
 	rm -f *.pyc
 	rm -rf __pycache__
 	rm -f $(PACKAGE)
+	rm -rf doc
 
 pack:
 	zip -r $(PACKAGE) . -x "*.git*" "__pycache__/*" ".idea/*"
@@ -43,3 +44,12 @@ install:
 	printf '#!/bin/bash\ncd /usr/lib/ivs-calculator\npython3 /usr/lib/ivs-calculator/main.py "$$@"\n' \
 		> $(DESTDIR)/usr/bin/ivs-calculator
 	chmod +x $(DESTDIR)/usr/bin/ivs-calculator
+
+install-stddev:
+	mkdir -p $(DESTDIR)/usr/lib/ivs-stddev
+	cp stddev $(DESTDIR)/usr/lib/ivs-stddev/
+	cp -r math_ivs $(DESTDIR)/usr/lib/ivs-stddev/
+	mkdir -p $(DESTDIR)/usr/bin
+	printf '#!/bin/bash\ncd /usr/lib/ivs-stddev\npython3 /usr/lib/ivs-stddev/stddev "$$@"\n' \
+		> $(DESTDIR)/usr/bin/ivs-stddev
+	chmod +x $(DESTDIR)/usr/bin/ivs-stddev
