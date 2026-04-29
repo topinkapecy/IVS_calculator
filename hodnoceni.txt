@@ -1,4 +1,4 @@
 xcehlas00 100 (GUI, matematicka knihovna)
 xnaselp00 100 (dokumentace, instalator)
-xsladed00 100 (profiling, makefile) 
+xsladed00 100 (profiling, makefile)
 xsirilm00 100 (debugging, testy, mockup)
