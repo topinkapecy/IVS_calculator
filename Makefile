@@ -3,9 +3,10 @@ APP=main.py
 STDDEV=stddev
 PACKAGE=projekt.zip
 
-.PHONY: all run clean pack test doc stddev help profile
+.PHONY: all run clean pack test doc stddev help profile install
 
-all: run
+all:
+	@echo "Use 'make run' to start the calculator"
 
 run:
 	$(PYTHON) $(APP)
