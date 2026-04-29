@@ -35,12 +35,7 @@ def clear():
 def calculate():
     try:
         expression = display.get()
-        expression = expression.replace("×", "*").replace("^", "**")
-        expression = expression.replace("÷", "/")
-        expression = re.sub(r'(\d+)!', r'math_ivs.factorial(\1)', expression)# makes factorial to not evaluate immedialtelly but wait for =
-        expression = re.sub(r'√(\d+(\.\d+)?)', r'math_ivs.sqrt(\1)', expression)#behaves same as factorial
-        expression = re.sub(r'\b0+(\d+)', r'\1', expression)# supports numbers such as 09+01 = 10
-        result = eval(expression)
+        result = math_ivs.evaluate(expression)
         result_str = str(result)
 
         if len(result_str.replace(".", "").replace("-", "")) > 16: # if number is longer than 16 digits it shortens it
@@ -67,13 +62,22 @@ def percentage():
         display.set("Error")
 
 
+def open_image_window():
+    new_window = tkinter.Toplevel(root)
+    new_window.title("Hint")
+    new_window.geometry("587x448")
+    img = tkinter.PhotoImage(file="hintcalc.png").subsample(2, 2)
+    label = tkinter.Label(new_window, image=img)
+    label.image = img  # musí ostať referencia inak sa obrázok stratí
+    label.pack()
+
 
 
 # Display
 tkinter.Entry(canvas, textvariable=display, font=("Arial", 30), justify="right",state="readonly",readonlybackground="lightblue").place(x=10, y=10, width=380, height=100)
 
 # Clear button
-tkinter.Button(canvas, text="C",bg= "gainsboro",font= "Arial 20", command=clear).place(x=10, y=120, width=380, height=70)
+tkinter.Button(canvas, text="C",bg= "gainsboro",font= "Arial 20", command=clear).place(x=10, y=120, width=262.5+20, height=70)
 
 # Row 5
 tkinter.Button(canvas, text="√",bg = "darkorange",font= "Arial 20",command=lambda: press("√")).place(x=10, y=200, width=87.5, height=50)
@@ -105,6 +109,9 @@ tkinter.Button(canvas, text="0",bg= "gainsboro",font= "Arial 20", command=lambda
 tkinter.Button(canvas, text=".",bg = "darkorange",font= "Arial 20", command=lambda: press(".")).place(x=205, y=440, width=87.5, height=50)
 tkinter.Button(canvas, text="=",bg= "darkorange",font= "Arial 20", command=calculate).place(x=302.5, y=440, width=87.5, height=50)
 
+
+#hint button
+tkinter.Button(canvas, text="?",bg="gainsboro", font="Arial 20", command=open_image_window).place(x=302.5, y=120, width=87.5, height=70)
 # makes also possible to use buttons on keyboard to calculate
 canvas.bind_all("<Key>", lambda e: press(e.char) if e.char in "0123456789.+-*/" else None)
 canvas.bind_all("<Return>", lambda e: calculate())
