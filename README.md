@@ -1,12 +1,24 @@
-Prostredi
+2.projekt předmětu IVS\
+Kalkulačka
+---------
+
+Tento projekt byl vytvořen v rámci předmětu Praktické aspekty vývoje softwaru  
+na Fakultě informačních technologií Vysokého učení technického v Brně.  
+<img src="logo.png" width="300" alt="Logo kalkulačky">  
+
+Prostředí
 ---------
 
 Ubuntu 64bit
 
-Autori
+Instalace
 ------
 
-Nazev tymu
+
+Autoři
+------
+
+Gods of Assembler
 - xnaselp00 Petr Nášel 
 - xsladed00 David SLádek
 - xsirilm00 Michal Širilla 
