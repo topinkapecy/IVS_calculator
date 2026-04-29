@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-import sys 
-import math
-
+import sys
+from mylib import sqrt  
 
 
 def read_numbers():
     """
-    Načíta čísla z argv aj zo stdin.
-    Vracia generátor (aby sme neukladali veľké pole).
+    Načíta čísla z argv a stdin
+    Vracia generátor (aby sme neukladali veľké pole)
     """
     
     for arg in sys.argv[1:]:
@@ -17,7 +16,6 @@ def read_numbers():
             print(f"Chyba: neplatné číslo '{arg}'", file=sys.stderr)
             sys.exit(1)
 
-    
     if not sys.stdin.isatty():
         for line in sys.stdin:
             for token in line.split():
@@ -30,7 +28,7 @@ def read_numbers():
 
 def compute_stddev():
     """
-    Výpočet výběrovej smerodajnej odchýlky v jednom prechode.
+    Výpočet výberovej smerodajnej odchýlky v jednom prechode
     """
     sum_x = 0.0
     sum_x2 = 0.0
@@ -46,11 +44,10 @@ def compute_stddev():
 
     variance = (sum_x2 - (sum_x ** 2) / count) / (count - 1)
 
-    # ochrana proti malým záporným číslam kvôli presnosti
     if variance < 0:
         variance = 0.0
 
-    return math.sqrt(variance)
+    return sqrt(variance)  
 
 
 def main():
