@@ -2,7 +2,12 @@ import re
 
 
 def sqrt(x, n=2):
-    return x**(1/n)
+    if n == 0:
+        raise ValueError("Root degree cannot be zero")
+    if x < 0:
+        raise ValueError("Root of negative number is not supported")
+    return x ** (1 / n)
+    
 def factorial(x):
     res = 1
     if x < 0:
