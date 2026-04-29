@@ -8,11 +8,23 @@ na Fakultě informačních technologií Vysokého učení technického v Brně.
 
 Prostředí
 ---------
-
 Ubuntu 64bit
 
 Instalace
 ------
+
+Aplikace je kompatibilní s Ubuntu 64 bit, pro stažení a následnou instalaci programu je třeba nainstalovat následující závislosti:  
+`sudo` `apt` `install` `git`   
+Klonování repozitáře a přesunutí do složky se soubory kalkulačky
+
+    git clone https://github.com/topinkapecy/IVS calculator.git
+    cd IVS calculator
+Instalace balíčku
+
+`sudo apt install ./ivs-calculator 1.0 all.deb`
+
+Spuštění kalkulačky  
+`ivs-calculator`  
 
 
 Autoři
@@ -20,7 +32,7 @@ Autoři
 
 Gods of Assembler
 - xnaselp00 Petr Nášel 
-- xsladed00 David SLádek
+- xsladed00 David Sládek
 - xsirilm00 Michal Širilla 
 - xcehlas00 Samuel Cehlárik
 
