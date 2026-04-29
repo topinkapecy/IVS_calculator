@@ -32,3 +32,13 @@ pack:
 
 help:
 	@echo "make run / stddev / profile / test / clean / pack"
+
+install:
+	mkdir -p $(DESTDIR)/usr/lib/ivs-calculator
+	cp *.py $(DESTDIR)/usr/lib/ivs-calculator/
+	cp -r math_ivs $(DESTDIR)/usr/lib/ivs-calculator/
+	cp logo.png $(DESTDIR)/usr/lib/ivs-calculator/
+	mkdir -p $(DESTDIR)/usr/bin
+	printf '#!/bin/bash\ncd /usr/lib/ivs-calculator\npython3 /usr/lib/ivs-calculator/main.py "$$@"\n' \
+		> $(DESTDIR)/usr/bin/ivs-calculator
+	chmod +x $(DESTDIR)/usr/bin/ivs-calculator
